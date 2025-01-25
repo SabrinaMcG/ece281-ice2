@@ -18,7 +18,35 @@
 --|
 --|    i_<port name>            = on-chip input port
 --|    o_<port name>            = on-chip output port
+--|    xb_<port name>           = off-chip bidirectional port ( _pads file )
+--|    xi_<port name>           = off-chip input port         ( _pads file )
+--|    xo_<port name>           = off-chip output port        ( _pads file )
+--|    b_<port name>            = on-chip bidirectional port
+--|    i_<port name>            = on-chip input port
+--|    o_<port name>            = on-chip output port
+--|    c_<signal name>          = combinatorial signal
+--|    f_<signal name>          = synchronous signal
+--|    ff_<signal name>         = pipeline stage (ff_, fff_, etc.)
+--|    <signal name>_n          = active low signal
+--|    w_<signal name>          = top level wiring signal
+--|    g_<generic name>         = generic
+--|    k_<constant name>        = constant
+--|    v_<variable name>        = variable
+--|    sm_<state machine type>  = state machine type definition
+--|    s_<signal name>          = state name
+--+----------------------------------------------------------------------------
+--| FILENAME    : halfadder.vhd
+--| AUTHOR(S)   : Sabrina McGarvey
+--| CREATED     : 01/22/2025
+--| DESCRIPTION : Implements a half adder
+
+--| DOCUMENTATION: None
 --|
+--+----------------------------------------------------------------------------
+--| REQUIRED FILES:
+--|     Libraries   : ieee
+--|     Packages    : std_logic_1164, numeric_std, unisim
+--|     Files       : None
 --+----------------------------------------------------------------------------
 library ieee;
   use ieee.std_logic_1164.all;
@@ -29,7 +57,8 @@ entity halfAdder is
   port(
 	i_A     : in  std_logic; -- 1-bit input port
 	i_B     : in  std_logic; 
-	o_S     : out std_logic  -- 1-bit output port (NOTE: NO semicolon on LAST port only!)	    
+	o_S     : out std_logic;
+	o_Cout  : out std_logic  -- 1-bit output port (NOTE: NO semicolon on LAST port only!)	    
 	-- TODO:  Carry port
   ); -- the semicolon is here instead
 end halfAdder;
@@ -42,6 +71,7 @@ begin
 
 	-- *concurrent* signal assignments
 	o_S    <= i_A xor i_B;
+	o_Cout <= i_A and i_B;
 	-- TODO:  Carry signal assignment
 	
 end halfAdder_arch;
